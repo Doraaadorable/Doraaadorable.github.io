@@ -72,6 +72,15 @@ nav a:hover {
     width: 100%;
     margin: 0 auto;
     padding: 100px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 70px;
+}
+
+.hero-photo {
+    width: clamp(250px, 27vw, 300px);
+    border-radius: 18px;
 }
 
 .eyebrow,
@@ -98,7 +107,7 @@ nav a:hover {
 
 .hero h2 {
     max-width: 720px;
-    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-size: clamp(1.15rem, 2.3vw, 1.6rem);
     font-weight: 500;
     line-height: 1.35;
     margin-bottom: 22px;
@@ -308,6 +317,11 @@ nav a:hover {
     font-size: 0.78rem;
 }
 
+.project-card:first-child > .button {
+    display: inline-block;
+    margin-top: 24px;
+}
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -399,6 +413,12 @@ footer {
 
     .hero-content {
         padding: 80px 24px;
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .hero-photo {
+        width: min(300px, 100%);
     }
 
     .section {
