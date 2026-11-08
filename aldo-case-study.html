@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ReMatch: ALDO hackathon second-place prototype, decision architecture, validation and limitations.">
+<title>ReMatch — ALDO Return-to-Resale | Dora Zhuang</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.case-study{max-width:1020px;margin:0 auto;padding:80px 24px 96px;line-height:1.7}.case-study h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.12;margin:14px 0 20px}.case-study h2{margin-top:52px}.case-study .lead{font-size:1.15rem;max-width:760px}.case-study .eyebrow{letter-spacing:.13em;text-transform:uppercase}.case-study .pill{display:inline-block;border:1px solid currentColor;border-radius:50px;padding:5px 12px;margin:6px 6px 6px 0;font-size:.85rem}.case-study .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:32px 0}.case-study .fact{border:1px solid #aaa6;border-radius:12px;padding:20px}.case-study .fact strong{display:block;font-size:1.25rem}.case-study .fact span{font-size:.9rem}.case-study .diagram{overflow-x:auto;border:1px solid #aaa6;border-radius:16px;padding:18px;margin:26px 0}.case-study svg{width:100%;min-width:640px;height:auto}.case-study svg .node{fill:#f8f8fa;stroke:#626579;stroke-width:1.5}.case-study svg .decision{fill:#e8f1ef;stroke:#426f66;stroke-width:1.5}.case-study svg text{fill:#20232d;font-family:Arial,sans-serif;font-size:14px}.case-study svg .arrow{stroke:#586075;stroke-width:2;fill:none;marker-end:url(#arrow)}.case-study .note{font-size:.9rem;opacity:.8}.case-study a{overflow-wrap:anywhere}@media(prefers-color-scheme:dark){.case-study svg .node{fill:#e9eaf0}.case-study svg .decision{fill:#d4eae2}}
+</style></head><body><header class="navbar"><div class="nav-container"><a class="logo" href="index.html">Dora Zhuang</a><nav><a href="index.html#projects">Projects</a><a href="index.html#contact">Contact</a></nav></div></header>
+<main class="case-study">
+<p class="eyebrow">Retail analytics · Agentic AI · Hackathon case study</p>
+<h1>ReMatch: Return-to-Resale</h1>
+<p class="lead">A second-place project at the McGill Bensadoun Retail Gen-AI Hackathon (October 2026). The prototype explores how AI-assisted orchestration and explicit business rules could help screen returned footwear for resale.</p>
+<div><span class="pill">AWS Bedrock</span><span class="pill">Strands Agents</span><span class="pill">Python</span><span class="pill">Streamlit</span><span class="pill">Deterministic eligibility</span></div>
+<div class="facts"><div class="fact"><strong>2nd place</strong><span>Hackathon team result</span></div><div class="fact"><strong>82 / 82</strong><span>Local automated tests passed</span></div><div class="fact"><strong>Simulated</strong><span>Offers, buyer preferences and outcomes</span></div></div>
+<h2>The business question</h2>
+<p>When a returned product is still potentially sellable, can a structured workflow verify inspection and resale approval, screen a synthetic buyer waitlist against eligibility constraints, and prepare a simulated offer? The prototype addresses <strong>operational decision consistency</strong>, not proven resale demand or profit maximization.</p>
+<h2>Decision architecture</h2>
+<div class="diagram" role="img" aria-label="Return case flows through inspection and approval gate, buyer eligibility checks, backend revalidation, simulated offer creation and dry-run notification. Failed gates block the process.">
+<svg viewBox="0 0 900 545" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6" fill="none" stroke="#586075" stroke-width="1.5"/></marker></defs>
+<rect class="node" x="315" y="15" width="270" height="56" rx="10"/><text x="450" y="38" text-anchor="middle">Return case</text><text x="450" y="57" text-anchor="middle">Synthetic / pseudonymous</text>
+<path class="arrow" d="M450 71 V105"/>
+<rect class="decision" x="315" y="105" width="270" height="60" rx="10"/><text x="450" y="129" text-anchor="middle">Inspection + resale</text><text x="450" y="149" text-anchor="middle">authorization gate</text>
+<path class="arrow" d="M315 135 H195"/><text x="253" y="124" text-anchor="middle">Not approved</text><rect class="node" x="30" y="108" width="165" height="55" rx="10"/><text x="112" y="140" text-anchor="middle">Block offer</text>
+<path class="arrow" d="M450 165 V203"/><text x="470" y="186">Approved</text>
+<rect class="node" x="315" y="203" width="270" height="57" rx="10"/><text x="450" y="226" text-anchor="middle">Grade + proposed price</text><text x="450" y="246" text-anchor="middle">(simulation inputs)</text>
+<path class="arrow" d="M450 260 V292"/>
+<rect class="decision" x="315" y="292" width="270" height="65" rx="10"/><text x="450" y="317" text-anchor="middle">Buyer eligibility</text><text x="450" y="337" text-anchor="middle">SKU · opt-in · grade · price</text>
+<path class="arrow" d="M585 325 H704"/><text x="648" y="313" text-anchor="middle">Ineligible</text><rect class="node" x="704" y="298" width="165" height="55" rx="10"/><text x="786" y="331" text-anchor="middle">Exclude buyer</text>
+<path class="arrow" d="M450 357 V386"/>
+<rect class="decision" x="315" y="386" width="270" height="52" rx="10"/><text x="450" y="417" text-anchor="middle">Backend revalidation</text>
+<path class="arrow" d="M450 438 V462"/>
+<rect class="node" x="315" y="462" width="270" height="55" rx="10"/><text x="450" y="485" text-anchor="middle">Create / reuse simulated offer</text><text x="450" y="504" text-anchor="middle">Dry-run notification workflow</text>
+</svg></div>
+<p class="note">Conceptual diagram of the demonstrated decision logic; not a production system architecture. Inspection and pricing are provided as inputs, not inferred by an image model or optimized by the agent.</p>
+<h2>What the AI does — and does not do</h2>
+<p>The Strands/Bedrock agent coordinates tool calls. Python business rules govern inspection status, authorization, buyer eligibility, and offer reuse. The agent does not establish real buyer intent, independently grade a physical item, or guarantee an actual sale. A separate historical-case Streamlit demo runs without AWS, using locally held case fixtures and synthetic buyer inputs.</p>
+<h2>Testing and evidence</h2>
+<p>In a local macOS run reported November 2026, <strong>82 automated tests passed</strong>: 28 agent/offline, 32 notifications, and 22 historical-demo tests. Covered scenarios include blocked inspections, buyer opt-out, grade and willingness-to-pay limits, duplicate offer reuse, and backend eligibility revalidation. This does not establish AWS end-to-end reliability, security certification, or production readiness.</p>
+<h2>Business limitations and next validation</h2>
+<p>All test buyers and willingness-to-pay ceilings are fictional. Net recovery is an illustrative estimate from proposed price minus modeled costs, not realized profit. To establish commercial value, a future pilot would need authorized customer research, measured conversion, actual reverse-logistics costs, and operational review. No competition source records, private screenshots, or confidential implementation details are published on this page.</p>
+<p><a href="index.html#projects">← Back to projects</a></p>
+</main><footer><p>© 2026 Dora Zhuang · Portfolio case study</p></footer></body></html>
