@@ -323,17 +323,26 @@ nav a:hover {
 
 /* Keep all four project cards visually consistent: tags above a separated CTA. */
 .project-card > .tags {
-    margin-bottom: 24px;
+    width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    flex: 0 0 auto;
 }
 
+/* Dedicated action row: never allow the link to sit on the tag line. */
 .project-card > .button {
-    display: inline-flex;
+    display: flex;
+    position: relative;
+    clear: both;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     align-self: flex-start;
-    margin-top: auto;
+    margin-top: 32px;
     max-width: 100%;
     text-align: center;
+    white-space: normal;
+    line-height: 1.4;
 }
 
 .project-card > .button:focus-visible {
