@@ -284,6 +284,10 @@ nav a:hover {
     background: white;
     border-radius: 18px;
     border: 1px solid #e2e2e2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
 }
 
 .project-number {
@@ -317,9 +321,24 @@ nav a:hover {
     font-size: 0.78rem;
 }
 
-.project-card:first-child > .button {
-    display: inline-block;
-    margin-top: 24px;
+/* Keep all four project cards visually consistent: tags above a separated CTA. */
+.project-card > .tags {
+    margin-bottom: 24px;
+}
+
+.project-card > .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    margin-top: auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.project-card > .button:focus-visible {
+    outline: 2px solid #202124;
+    outline-offset: 3px;
 }
 
 .skills-grid {
