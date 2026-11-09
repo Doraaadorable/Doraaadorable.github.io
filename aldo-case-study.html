@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="ReMatch: second-place ALDO hackathon prototype for matching returned footwear to resale buyers: decision logic, testing and path to a pilot.">
+<meta name="description" content="ReMatch: 2nd of 10 finalists at an ALDO retail hackathon. An agent that routes returned footwear to resale, liquidation or donation.">
 <title>ReMatch — ALDO Return-to-Resale | Dora Zhuang</title>
 <link rel="stylesheet" href="style.css">
 <style>
@@ -9,13 +9,13 @@
 <main class="case-study">
 <p class="eyebrow">Retail analytics · Agentic AI · Hackathon case study</p>
 <h1>ReMatch: Return-to-Resale</h1>
-<p class="lead">Second place at the McGill Bensadoun Retail Gen-AI Hackathon (October 2026): an AI-assisted workflow that screens returned footwear for resale and matches it to eligible buyers under explicit business rules.</p>
+<p class="lead">2nd of 10 finalist teams at the McGill Bensadoun Retail Gen-AI Hackathon (October 2026): an agent that decides whether a returned pair is resold, liquidated or donated, and matches resale stock to eligible buyers under explicit business rules.</p>
 <div><span class="pill">AWS Bedrock</span><span class="pill">Strands Agents</span><span class="pill">Python</span><span class="pill">Streamlit</span><span class="pill">Deterministic eligibility</span></div>
-<div class="facts"><div class="fact"><strong>2nd place</strong><span>Team of six</span></div><div class="fact"><strong>82 / 82</strong><span>Local automated tests passed</span></div><div class="fact"><strong>Rule-based</strong><span>Every eligibility and offer decision traceable</span></div></div>
+<div class="facts"><div class="fact"><strong>2nd of 10</strong><span>Finalist teams; team of six</span></div><div class="fact"><strong>79 / 79</strong><span>Automated tests passing in CI</span></div><div class="fact"><strong>Rule-based</strong><span>Every eligibility and offer decision traceable</span></div></div>
 <h2>The business question</h2>
 <p>When a returned pair can still be resold, can a structured workflow check inspection and resale approval, screen a buyer waitlist against eligibility rules, and prepare an offer, the same way every time? The prototype targets <strong>consistent operational decisions</strong>; resale demand and prices enter as inputs.</p>
 <h2>My role</h2>
-<p>I was the modeller in a six-person team. I also wrote code for the prototype and built its Streamlit dashboard.</p>
+<p>I was the modeller in a six-person team, wrote the code and built the Streamlit dashboard.</p>
 <h2>Decision architecture</h2>
 <div class="diagram" role="img" aria-label="Return case flows through inspection and approval gate, buyer eligibility checks, backend revalidation, simulated offer creation and dry-run notification. Failed gates block the process.">
 <svg viewBox="0 0 900 545" xmlns="http://www.w3.org/2000/svg">
@@ -36,10 +36,15 @@
 </svg></div>
 <p class="note">Decision logic of the prototype. Inspection results and proposed prices are inputs to the workflow.</p>
 <h2>How decisions are made</h2>
-<p>The Strands agent on AWS Bedrock coordinates the tool calls. Python business rules decide inspection status, authorization, buyer eligibility and offer reuse, so every decision can be traced to a rule. A separate Streamlit demo replays historical cases without AWS.</p>
+<p>The Strands agent on AWS Bedrock chooses which tool to call next. Python rules decide inspection status, authorization, buyer eligibility, price and offer reuse, so every decision traces to a rule. At a fixed price every eligible buyer yields the same recovery, so buyers are asked in order of headroom, ceiling minus price: the least price-sensitive first.</p>
+<h2>Resell, liquidate or donate</h2>
+<p>Resale has a cost even when it fails: cleaning and handling are paid up front, and a pair that does not sell within the listing window still goes to a liquidator or donation after a holding cost. With price <em>p</em>, shipping <em>s</em>, preparation <em>c</em>, holding cost <em>h</em> and <em>A</em> the better net value of liquidation or donation, resale beats the alternatives only when the sell-through rate exceeds</p>
+<p style="text-align:center;margin:1em 0"><em>q</em>* = (<em>c</em> + <em>h</em>) / (<em>p</em> − <em>s</em> − <em>A</em> + <em>h</em>)</p>
+<p>In the demo case (price 55, liquidation netting 16) the break-even is 34%: resale wins at 60% sell-through, liquidation at 30%. The dashboard lets every input be changed and also sets a price from buyer ceilings: the highest price that at least two buyers will accept, so a backup buyer remains.</p>
 <h2>Testing</h2>
-<p><strong>82 automated tests pass</strong> in a local run (November 2026): 28 agent and offline, 32 notification and 22 historical-demo tests. They cover blocked inspections, buyer opt-out, grade and willingness-to-pay limits, duplicate offers and backend eligibility revalidation.</p>
+<p><strong>79 automated tests pass</strong> in CI, together with a render check of the dashboard. They cover blocked inspections, buyer opt-out, grade and willingness-to-pay limits, buyer order, duplicate offers, notification consent and dry-run sending, and the disposition model on both sides of the break-even.</p>
 <h2>From prototype to pilot</h2>
-<p>The prototype runs on synthetic buyers and willingness-to-pay ceilings, and estimates net recovery as proposed price minus modelled costs. A pilot would replace these with customer research, measured conversion and actual reverse-logistics costs.</p>
+<p>The public version runs on synthetic buyers, ceilings and costs. The quantity a pilot has to measure is sell-through by grade and price: with it and actual reverse-logistics costs, the break-even rate turns into a routing rule per return.</p>
+<p><a href="https://github.com/Doraaadorable/aldo-rematch" target="_blank" rel="noopener noreferrer">Code on GitHub</a></p>
 <p><a href="index.html#projects">← Back to projects</a></p>
 </main><footer><p>© 2026 Dora Zhuang · Portfolio case study</p></footer></body></html>
